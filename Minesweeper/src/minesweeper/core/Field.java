@@ -2,6 +2,8 @@ package minesweeper.core;
 
 import java.util.Random;
 
+import minesweeper.core.Tile.State;
+
 /**
  * Field represents playing field and game logic.
  */
@@ -63,10 +65,10 @@ public class Field {
                 return;
             }
 
-//            if (isSolved()) {
-//                state = GameState.SOLVED;
-//                return;
-//            }
+            if (isSolved()) {
+                state = GameState.SOLVED;
+                return;
+            }
         }
     }
 
@@ -80,7 +82,7 @@ public class Field {
 		Tile tile = tiles[row][column];
 		if (tile.getState() == Tile.State.CLOSED) {
 			tile.setState(Tile.State.MARKED);
-		} else {
+		} else if (tile.getState() == Tile.State.MARKED){
 			tile.setState(Tile.State.CLOSED);
 		}
 
@@ -116,9 +118,21 @@ public class Field {
      *
      * @return true if game is solved, false otherwise
      */
-    private boolean isSolved() {
-        throw new UnsupportedOperationException("Method isSolved not yet implemented");
+    public boolean isSolved() {
+    	return ((rowCount*columnCount)-getNumberOf(State.OPEN)) == getMineCount();
     }
+    
+	private int getNumberOf(Tile.State state) {
+		int result=0;
+		for (int i = 0; i < rowCount; i++) {
+			for (int j = 0; j < columnCount; j++) {
+				if(tiles[i][j].getState()==state){
+					result++;
+				}
+			}
+		}
+		return result;
+	}
 
     /**
      * Returns number of adjacent mines for a tile at specified position in the field.
