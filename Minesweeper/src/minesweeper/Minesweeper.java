@@ -7,6 +7,8 @@ import minesweeper.core.Field;
  * Main application class.
  */
 public class Minesweeper {
+	private long startMillis;
+	private  static Minesweeper instance;
     /** User interface. */
     private UserInterface userInterface;
  
@@ -14,24 +16,14 @@ public class Minesweeper {
      * Constructor.
      */
     private Minesweeper() {
+    	instance = this;
+    	
         userInterface = new ConsoleUI();
         
-        Field field = new Field(15, 15, 10);
-        field.openTile(5,5);
-        field.markTile(1,1);
-//        field.markTile(1,1);
-        field.markTile(5,5);
-//        for (int i = 0; i < 6; i++) {
-//			for (int j = 0; j < 6; j++) {
-//				field.openTile(i,j);
-//			}
-//        }
+        Field field = new Field(9, 20, 15);
         
-        userInterface.newGameStarted(field);
-        System.out.println(field.isSolved());
-
-//        System.out.println(field);
-        
+        startMillis = System.currentTimeMillis();
+        userInterface.newGameStarted(field);      
     }
 
     /**
@@ -41,5 +33,16 @@ public class Minesweeper {
     public static void main(String[] args) {
         new Minesweeper();
         
+    }
+    
+    public static Minesweeper getInstance(){
+    	return instance;
+    }
+    
+    public int getPlayingSeconds(){
+    	int result;
+    	result=(int) (System.currentTimeMillis() - startMillis);
+    	result/=1000;
+    	return result;
     }
 }
