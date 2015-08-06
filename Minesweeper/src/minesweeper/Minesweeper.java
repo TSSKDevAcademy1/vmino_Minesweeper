@@ -11,19 +11,24 @@ public class Minesweeper {
 	private  static Minesweeper instance;
     /** User interface. */
     private UserInterface userInterface;
+    private BestTimes bestTimes;
  
     /**
      * Constructor.
      */
     private Minesweeper() {
     	instance = this;
-    	
+
         userInterface = new ConsoleUI();
-        
-        Field field = new Field(9, 20, 15);
-        
+        bestTimes = new BestTimes();
+    	bestTimes.addPlayerTime("Vlado", 5);
+    	bestTimes.addPlayerTime("Kubo", 6);
+    	bestTimes.addPlayerTime("Dakto", 1);
+        Field field = new Field(9, 9, 10);
+        System.out.println(bestTimes.toString());
         startMillis = System.currentTimeMillis();
         userInterface.newGameStarted(field);      
+        
     }
 
     /**
@@ -44,5 +49,9 @@ public class Minesweeper {
     	result=(int) (System.currentTimeMillis() - startMillis);
     	result/=1000;
     	return result;
+    }
+    
+    public BestTimes getBestTimes(){
+    	return bestTimes;
     }
 }

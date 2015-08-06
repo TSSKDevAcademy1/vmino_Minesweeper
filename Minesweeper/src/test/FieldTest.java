@@ -13,9 +13,11 @@ public class FieldTest {
 	static final int ROWS = 9;
 	static final int COLUMNS = 9;
 	static final int MINES = 10;
+	static Field field;
 
 	@Before
 	public void setUp() throws Exception {
+		field = new Field(ROWS, COLUMNS, MINES);
 	}
 
 	@After
@@ -24,7 +26,6 @@ public class FieldTest {
 
 	@Test
 	public void isSolved() {
-		Field field = new Field(ROWS, COLUMNS, MINES);
 
 		assertEquals(GameState.PLAYING, field.getState());
 
@@ -48,7 +49,6 @@ public class FieldTest {
 
 	@Test
 	public void generate() {
-		Field field = new Field(ROWS, COLUMNS, MINES);
 		int mineCount = 0;
 		int clueCount = 0;
 
@@ -61,8 +61,7 @@ public class FieldTest {
 
 				if (field.getTile(row, column) instanceof Clue) {
 					clueCount++;
-				}
-				else if (field.getTile(row, column) instanceof Mine) {
+				} else if (field.getTile(row, column) instanceof Mine) {
 					mineCount++;
 				}
 			}
@@ -71,59 +70,52 @@ public class FieldTest {
 		assertEquals(ROWS * COLUMNS - MINES, clueCount);
 
 	}
-	
+
 	@Test
 	public void openTile() {
-		Field field = new Field(ROWS, COLUMNS, MINES);
 		for (int row = 0; row < field.getRowCount(); row++) {
 			for (int column = 0; column < field.getColumnCount(); column++) {
 				Tile tile = field.getTile(row, column);
-				
+
 				field.openTile(row, column);
 				assertEquals(Tile.State.OPEN, tile.getState());
-				
+
 				field.openTile(row, column);
 				assertEquals(Tile.State.OPEN, tile.getState());
-				
+
 				field.markTile(row, column);
 				assertEquals(Tile.State.OPEN, tile.getState());
 			}
 		}
 
 	}
-	
-	@Test
-	public void openAdjacentTiles() {
-		Field field = new Field(ROWS, COLUMNS, MINES);
-		
-	}
-	
+
 	@Test
 	public void markTile() {
-		Field field = new Field(ROWS, COLUMNS, MINES);
 		for (int row = 0; row < field.getRowCount(); row++) {
 			for (int column = 0; column < field.getColumnCount(); column++) {
 				Tile tile = field.getTile(row, column);
-				
+
 				field.markTile(row, column);
 				assertEquals(Tile.State.MARKED, tile.getState());
-				
+
 				field.openTile(row, column);
 				assertEquals(Tile.State.MARKED, tile.getState());
-				
+
 				field.markTile(row, column);
 				assertEquals(Tile.State.CLOSED, tile.getState());
-				
+
 				field.markTile(row, column);
 				assertEquals(Tile.State.MARKED, tile.getState());
 			}
 		}
 	}
-	
-	
+
 	@Test
 	public void countAdjacentMines() {
-		Field field = new Field(ROWS, COLUMNS, MINES);
 	}
-	
+
+	@Test
+	public void openAdjacentTiles() {
+	}
 }

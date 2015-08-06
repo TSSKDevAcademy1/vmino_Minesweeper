@@ -7,6 +7,7 @@ import java.util.Formatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import minesweeper.BestTimes;
 import minesweeper.Minesweeper;
 import minesweeper.UserInterface;
 import minesweeper.core.Field;
@@ -49,11 +50,29 @@ public class ConsoleUI implements UserInterface {
             if(field.getState() == GameState.SOLVED){
 //            	update();
             	System.out.println("Gratulujem, vyhral si!");
+//            	try {
+//					if (newGame(readLine())){
+//					}
+//					else{
+//						System.exit(0);
+//					}
+//				} catch (WrongFormatException e) {
+//					System.out.println(e.getMessage());
+//				}
             	System.exit(0);
             }
             else if(field.getState() == GameState.FAILED){
-//            	update();
             	System.out.println("Prehral si!");
+//            	try {
+//					if (newGame(readLine())){
+//						newGameStarted(field);
+//					}
+//					else{
+//						System.exit(0);
+//					}
+//				} catch (WrongFormatException e) {
+//					System.out.println(e.getMessage());
+//				}
             	System.exit(0);
             }
         } while(true);
@@ -73,29 +92,24 @@ public class ConsoleUI implements UserInterface {
 		
 		for (int i = -1; i < field.getRowCount(); i++) {
 			if (i == -1) {
-//				System.out.printf("%" + r + "s", " ");
 				formatter.format("%" + r + "s", " ");
 				for (int j = -1; j < field.getColumnCount() - 1; j++) {
-//					System.out.printf("%" + c + "s", cislo);
 					formatter.format("%"+c+"s", cislo);
 					cislo++;
 				}
 			} else {
 				for (int j = -1; j < field.getColumnCount(); j++) {
 					if (j == -1) {
-//						System.out.printf("%" + r + "s", pismeno);
 						formatter.format("%"+r+"s", pismeno);
 						pismeno++;
 						if (pismeno>'Z'){
 							pismeno = 'A';
 						}
 					} else {
-//						System.out.printf("%" + c + "s", field.getTile(i, j));
 						formatter.format("%"+c+"s", field.getTile(i, j));
 					}
 				}
 			}
-//			System.out.printf("%n");
 			formatter.format("%n");
 		}
 	formatter.format("%27s", "Pocet ostavajucich min: "+field.getRemainingMineCount());
@@ -135,8 +149,8 @@ public class ConsoleUI implements UserInterface {
     		handleInput(input);
     	}
     	catch (WrongFormatException e){
-    		e.getMessage();
-    		System.err.println(e);
+    		e.printStackTrace();
+    		System.err.println(e.getMessage());
     	}
     }
 
@@ -165,5 +179,19 @@ public class ConsoleUI implements UserInterface {
     		throw new WrongFormatException("Zly format");
     	}
     }
+    
+//    private boolean newGame(String s) throws WrongFormatException {
+//    	System.out.println("Hrat znova ? (A/N)");
+//    	char ch = s.charAt(0);
+//    	if(ch == 'A'){
+//    		return true;
+//    	}
+//    	else if(ch == 'N'){
+//    		return false;
+//    	}
+//    	else {
+//    		throw new WrongFormatException("Nespravny format");
+//    	}
+//    }
     
 }

@@ -47,6 +47,10 @@ public class Field {
 		this.rowCount = rowCount;
 		this.columnCount = columnCount;
 		this.mineCount = mineCount;
+		if(this.mineCount < 0 || this.mineCount > rowCount * columnCount || this.rowCount < 1 || this.columnCount < 0){
+			System.err.println("Zadaj mensi pocet min alebo vacsie pole!");
+			System.exit(0);
+		}
 		tiles = new Tile[rowCount][columnCount];
 
 		// generate the field content
