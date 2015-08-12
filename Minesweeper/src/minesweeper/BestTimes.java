@@ -34,7 +34,7 @@ public class BestTimes implements Iterable<BestTimes.PlayerTime> {
 	public void addPlayerTime(String name, int time) {
 		PlayerTime player = new PlayerTime(name, time);
 		playerTimes.add(player);
-
+		
 		Collections.sort(playerTimes);
 	}
 
