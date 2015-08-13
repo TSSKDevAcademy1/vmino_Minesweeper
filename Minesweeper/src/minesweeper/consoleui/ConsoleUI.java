@@ -8,6 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import minesweeper.BestTimes;
+import minesweeper.DatabaseBestTimesLoader;
 import minesweeper.Minesweeper;
 import minesweeper.UserInterface;
 import minesweeper.core.Field;
@@ -22,6 +23,9 @@ public class ConsoleUI implements UserInterface {
     
     /** Input reader. */
     private BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+    
+   
+    private int time;
     
     /**
      * Reads line of text from the reader.
@@ -49,7 +53,10 @@ public class ConsoleUI implements UserInterface {
 
             if(field.getState() == GameState.SOLVED){
 //            	update();
+            	time = Minesweeper.getInstance().getPlayingSeconds();
+            	Minesweeper.getInstance().addPlayerTime(System.getProperty("user.name"), time);
             	System.out.println("Gratulujem, vyhral si!");
+            	System.out.println(Minesweeper.getInstance().getBestTimes().toString());
 //            	try {
 //					if (newGame(readLine())){
 //					}

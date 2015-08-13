@@ -14,13 +14,12 @@ import minesweeper.core.Field;
  */
 public class Minesweeper {
 	private long startMillis;
-	private  static Minesweeper instance;
+	private static Minesweeper instance;
     /** User interface. */
     private UserInterface userInterface;
     private BestTimes bestTimes;
     private Settings settings;
-    private static final String SETTING_FILE = System.getProperty("user.home") + System.getProperty("file.separator")
-	+ "minesweeper.settings";
+    private DatabaseBestTimesLoader loader = new DatabaseBestTimesLoader();
  
     /**
      * Constructor.
@@ -29,14 +28,17 @@ public class Minesweeper {
     	instance = this;
     	
         userInterface = new ConsoleUI();
-        bestTimes = new BestTimes();
-    	bestTimes.addPlayerTime("Vlado", 5);
-    	bestTimes.addPlayerTime("Kubo", 6);
-    	bestTimes.addPlayerTime("Dakto", 1);
+		if (loader.load() == null) {
+			bestTimes = new BestTimes();
+		} else {
+			bestTimes = loader.load();
+		}
+//    	bestTimes.addPlayerTime("Vlado", 5);
+//    	bestTimes.addPlayerTime("Kubo", 6);
+//    	bestTimes.addPlayerTime("Dakto", 1);
 
        	Settings settings = getSetting();
-  
-        Field field = new Field(settings.getRowCount(), settings.getColumnCount(), settings.getMineCount());
+        Field field = new Field(settings.getRowCount(), settings.getColumnCount(), 2);
         System.out.println(bestTimes.toString());
         startMillis = System.currentTimeMillis();
         userInterface.newGameStarted(field);      
@@ -63,6 +65,10 @@ public class Minesweeper {
     	return result;
     }
     
+    public void resetPlayingSeconds(){
+    	startMillis = System.currentTimeMillis();
+    }
+    
     public BestTimes getBestTimes(){
     	return bestTimes;
     }
@@ -73,5 +79,10 @@ public class Minesweeper {
     
     public void setSetting() {
     	this.settings.save();
+    }
+    
+    public void addPlayerTime(String name, int time){
+    	bestTimes.addPlayerTime(name, time);
+    	loader.save(bestTimes);
     }
 }

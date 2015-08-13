@@ -37,6 +37,10 @@ public class BestTimes implements Iterable<BestTimes.PlayerTime> {
 		
 		Collections.sort(playerTimes);
 	}
+	
+	public PlayerTime getPlayerTime(int i){
+		return playerTimes.get(i);
+	}
 
 	/**
 	 * Returns a string representation of the object.
@@ -52,6 +56,10 @@ public class BestTimes implements Iterable<BestTimes.PlayerTime> {
 		}
 //		f.close();
 		return f.toString();
+	}
+	
+	public int getCount() {
+		return playerTimes.size();
 	}
 
 	/**
