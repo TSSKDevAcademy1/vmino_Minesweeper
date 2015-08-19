@@ -7,8 +7,6 @@ import java.util.Formatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import minesweeper.BestTimes;
-import minesweeper.DatabaseBestTimesLoader;
 import minesweeper.Minesweeper;
 import minesweeper.UserInterface;
 import minesweeper.core.Field;

@@ -9,7 +9,7 @@ import java.sql.Statement;
 
 public class DatabaseBestTimesLoader {
 	
-	public static final String URL = "jdbc:mysql://localhost/minesweeper";
+	public static final String URL = "jdbc:mysql://localhost/puzzle";
 	public static final String USER = "root";
 	public static final String PASSWORD = "root";
 	
